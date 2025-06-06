@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_id' => env('CALENDAR_CLIENT_ID'),
+        'client_secret' => env('CALENDAR_CLIENT_SECRET'),
+        'redirect' => env('CALENDAR_REDIRECT_URI'),
+    ],
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+    ],
 ];
