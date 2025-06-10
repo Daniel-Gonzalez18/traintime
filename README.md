@@ -8,11 +8,6 @@ Aplicación web para la gestión de rutinas de entrenamiento, registro de progre
 - [STACK TECNOLÓGICO](#stack-tecnológico)  
 - [ACCESO A LA PLATAFORMA](#acceso-a-la-plataforma)  
 - [CASOS DE USO](#casos-de-uso)  
-  - [Registro y autenticación](#registro-y-autenticación)  
-  - [Conexión con Google Calendar](#conexión-con-google-calendar)  
-  - [Creación de rutinas](#creación-de-rutinas)  
-  - [Generación de eventos con IA](#generación-de-eventos-con-ia)  
-  - [Rutinas personales y recomendaciones](#rutinas-personales-y-recomendaciones)  
 - [AMPLIACIONES FUTURAS](#ampliaciones-futuras)  
 - [CONCLUSIÓN](#conclusión)
 
