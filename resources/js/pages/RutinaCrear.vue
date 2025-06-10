@@ -57,7 +57,7 @@ const faseAnterior = () => {
          { titulo: 'GRUPO', href: 'grupo' }
       ]" />
    </div>
-   <section class="justify-center flex w-full h-100 mx-auto bg-black shadow text-white pt-5">
+   <section class="justify-center flex w-full h-120 mx-auto bg-black shadow text-white pt-5">
       <form action="/generate-routine" method="post">
          <input type="hidden" name="altura" :value="formData.altura" />
          <input type="hidden" name="peso" :value="formData.peso" />

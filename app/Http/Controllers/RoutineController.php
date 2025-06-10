@@ -11,12 +11,18 @@ class RoutineController extends Controller
 {
     public function checkRoutine(){
          $user = Auth::user();
-
-        if ( $user->routine == null) {
-            return redirect()->route('rutina.crear');
-        }else{
-            return redirect()->route('rutina.dia');
+         
+         if (!$user->calendar_access_token) {
+            return redirect()->route('rutina.calendar');
         }
+        else {
+            if ( $user->routine == null) {
+                return redirect()->route('rutina.crear');
+            }else{
+                return redirect()->route('rutina.dia');
+            }
+        }
+        
     }
     public function routineDay(Request $request){
         $user=Auth::user();

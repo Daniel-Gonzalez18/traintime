@@ -61,16 +61,19 @@ const progreso = reactive(
                         <input type="hidden" :name="`progreso[${i}][nombre]`" :value="ejercicio.nombre" />
                         <p class="text-xl p-3">{{ ejercicio.nombre }}</p>
                         <p>Repeticiones estimadas {{ ejercicio.repeticiones }}</p>
-                        <div class="flex" v-for="n in ejercicio.series">
+                        <div class="flex mt-3" v-for="n in ejercicio.series">
                             <p>Serie numero {{ n }} :</p>
-                            <input type="number" :name="`progreso[${i}][series][${n - 1}][repeticiones]`" id="">
+                            <input type="number" class="border rounded ml-2 mr-2"
+                                :name="`progreso[${i}][series][${n - 1}][repeticiones]`" id="">
                             <p>repeticiones</p>
-                            <input type="number" :name="`progreso[${i}][series][${n - 1}][peso]`" id="">
+                            <input type="number" class=" border rounded ml-2 mr-2"
+                                :name="`progreso[${i}][series][${n - 1}][peso]`" id="">
                             <p>kg</p>
 
                         </div>
                     </div>
-                    <button type="submit" class="p-4 bg-white-500 text-white rounded">
+                    <button type="submit"
+                        class="bg-white text-black font-bold py-2 w-32 rounded hover:bg-gray-200 mt-3">
                         Enviar
                     </button>
                 </form>

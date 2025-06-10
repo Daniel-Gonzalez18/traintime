@@ -41,26 +41,33 @@ class ProgressController extends Controller
     public function mostrarProgresos(){
         $user= Auth::user();
         $progresos = Progress::where('user_id', $user->id)
-        ->orderBy('name')
         ->orderByRaw("FIELD(day, 'lunes','martes','miércoles','jueves','viernes','sábado','domingo')")
+        ->orderBy('name_exercise')
         ->orderBy('fecha')
-        ->get()
-        ->groupBy('name');
+        ->get();
 
-        $simplified = [];
+        $agrupados = [];
 
-    foreach ($progresos as $nombre => $listaProgresos) {
-        foreach ($listaProgresos as $p) {
-            $simplified[$nombre][] = [
-                'dia' => $p['dia'] ?? $p['day'],
-                'name_exercise' => $p['name_exercise'],
-                'rm' => $p['rm'],
-                'fecha' => $p['fecha'],
-            ];
-        }
-    }    
+foreach ($progresos as $progreso) {
+    $dia = $progreso->day;
+    $ejercicio = $progreso->name_exercise;
+    if (!isset($agrupados[$dia])) {
+        $agrupados[$dia] = [];
+    }
+    if (!isset($agrupados[$dia][$ejercicio])) {
+        $agrupados[$dia][$ejercicio] = [];
+    }
+    $agrupados[$dia][$ejercicio][] = [
+        'fecha' => $progreso->fecha,
+        'rm' => $progreso->rm,
+    ];
+}
+
+
+
+       
         return Inertia::render('Progreso',[
-            'progresos'=> $simplified
+            'progresos'=> $agrupados
         ]); 
     }
     

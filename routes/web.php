@@ -17,11 +17,8 @@ Route::get('/home', function () {
 Route::middleware('auth')->get('/', function () {
     return redirect()->route('login');
 });
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/group', [GroupsController::class  ,'mostrarGrupos'])->middleware(['auth', 'verified'])->name('grupo');
-Route::post('/rutina', [RoutineController::class, 'store'])->name('rutina.store');
+Route::post('/routine', [RoutineController::class, 'store'])->name('rutina.store');
 Route::get('/calendar', [CalendarController::class, "mostrarEventos"])->middleware(['auth', 'verified'])->name('calendario');
 Route::get('/progress', [ProgressController::class,'mostrarProgresos'])->middleware(['auth', 'verified'])->name('progreso');
 Route::post('/progress/store', [ProgressController::class, 'store'])->middleware(['auth', 'verified'])->name('progress.store');
@@ -30,7 +27,9 @@ Route::get('/routine/day', [RoutineController::class, 'routineDay'])->middleware
 Route::get('/routine/create', function () {
     return Inertia::render('RutinaCrear');
 })->middleware(['auth', 'verified'])->name('rutina.crear');
-// Route::get
+Route::get('/routine/calendar', function (){
+    return Inertia::render('RutinaCalendar');
+})->middleware(['auth', 'verified'])->name('rutina.calendar');
 Route::get('/auth/google', [AuthCalendarController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [AuthCalendarController::class, 'handleGoogleCallback'])->middleware(['auth']);
 Route::post('/generate-routine', [OpenAIController::class, 'createRoutine'])->middleware(['auth', 'verified'])->name('create-routine');
@@ -38,7 +37,6 @@ Route::get('/calendar/regiterevents',[CalendarController::class, "createEventFro
 Route::get('/verification', function(){
     return Inertia::render('Verificacion');
 })->name('verificacion');
-
 Route::post('/group/store',[GroupsController::class,"store"])->middleware(['auth','verified'])->name('group.store');
 Route::get('/create/group',function(){
     return Inertia::render('CrearGrupo');

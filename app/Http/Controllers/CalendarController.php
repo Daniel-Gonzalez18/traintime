@@ -15,6 +15,9 @@ class CalendarController extends Controller
 {   
     
     public function createEventFromRoutine(){
+        if (!$user->calendar_access_token) {
+            return redirect('/auth/google');
+        }
         $user=Auth::user();
     $client = new Google_Client();
     $client->setClientId(config('services.google.client_id'));
@@ -23,6 +26,8 @@ class CalendarController extends Controller
     $client->setAccessType('offline');
     $client->setPrompt('consent');
     $client->addScope(Google_Service_Calendar::CALENDAR);
+
+ 
 
 
     $token = [
@@ -37,6 +42,7 @@ class CalendarController extends Controller
         $user->calendar_access_token = $newToken['access_token'];
         $user->save();
         }
+
         $service = new Google_Service_Calendar($client);
 
         $rutina=json_decode($user->routine->contenido,true);
@@ -63,7 +69,7 @@ class CalendarController extends Controller
                 $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Repeticiones: {$ejercicio['repeticiones']} , Descanso: {$ejercicio['descanso']}\n";
 
         }else{
-            if (isset($ejercicio['duracion'])) {
+            if (isset($ejercicio['duración'])) {
                                 $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Duracion: {$ejercicio['duracion']} , Descanso: {$ejercicio['descanso']}\n";
 
             }else{
@@ -96,6 +102,7 @@ class CalendarController extends Controller
 
         
     }
+    return redirect()->route('home');
 }
 
 
@@ -131,7 +138,7 @@ class CalendarController extends Controller
                 $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Repeticiones: {$ejercicio['repeticiones']} , Descanso: {$ejercicio['descanso']}\n";
 
         }else{
-            if (isset($ejercicio['duracion'])) {
+            if (isset($ejercicio['duración'])) {
                                 $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Duracion: {$ejercicio['duración']} , Descanso: {$ejercicio['descanso']}\n";
 
             }else{

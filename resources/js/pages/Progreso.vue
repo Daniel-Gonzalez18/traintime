@@ -1,86 +1,80 @@
 <script setup lang="ts">
 import Cabecera from "@/components/Cabecera.vue";
 import PieDePagina from "@/components/PieDePagina.vue";
-import { computed } from "vue";
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
-import { Line } from "vue-chartjs";
+import { Line } from 'vue-chartjs'
+import { Chart, registerables } from 'chart.js'
 
-const props = defineProps<{ progresos: Record<string, any[]> }>();
-
-// Agrupar progresos por día y luego por ejercicio
-const progresosPorDia = computed(() => {
-  const res: Record<string, Record<string, any[]>> = {};
-  Object.entries(props.progresos).forEach(([ejercicio, lista]) => {
-    lista.forEach((p) => {
-      if (!res[p.day]) res[p.day] = {};
-      if (!res[p.day][ejercicio]) res[p.day][ejercicio] = [];
-      res[p.day][ejercicio].push(p);
-    });
-  });
-
-  // Opcional: Ordenar días de la semana
-  const diasOrdenados = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
-  const resultadoOrdenado: Record<string, Record<string, any[]>> = {};
-  diasOrdenados.forEach((dia) => {
-    if (res[dia]) resultadoOrdenado[dia] = res[dia];
-  });
-  // Añade otros días fuera de orden (por si acaso)
-  Object.keys(res).forEach((dia) => {
-    if (!diasOrdenados.includes(dia)) resultadoOrdenado[dia] = res[dia];
-  });
-
-  return resultadoOrdenado;
-});
-
-// Devuelve los datos para cada gráfica
-function getGraficaData(progresos: any[]) {
-  return {
-    labels: progresos.map((p) => p.fecha),
-    datasets: [
-      {
-        label: "RM",
-        data: progresos.map((p) => p.rm),
-        borderColor: "blue",
-        backgroundColor: "rgba(0, 0, 255, 0.2)",
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  };
-}
-
-const options = {
+Chart.register(...registerables)
+const props = defineProps<{ progresos: any }>()
+const chartOptions = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
-    legend: { display: true },
-    title: { display: false }
+    legend: { display: false }
   },
   scales: {
-    y: { beginAtZero: true }
+    y: {
+      beginAtZero: true,
+      title: { display: true, text: "RM" }
+    },
+    x: {
+      title: { display: true, text: "Fecha" }
+    }
   }
-};
+}
+function graficaData(datos: any[]) {
+  return {
+    labels: datos.map(p => p.fecha),
+    datasets: [
+      {
+        label: 'RM',
+        data: datos.map(p => p.rm),
+        borderColor: 'blue',
+        backgroundColor: 'rgba(30,144,255,0.2)',
+        tension: 0.3,
+      }
+    ]
+  }
+}
 </script>
-
 <template>
-  <div class="flex justify-center bg-black w-full h-20">
-    <Cabecera :enlaces="[
-      { titulo: 'CALENDARIO', href: 'calendario' },
-      { titulo: 'RUTINA', href: 'rutina' },
-      { titulo: 'INICIO', href: 'home' },
-      { titulo: 'GRUPO', href: 'grupo' }
-    ]" />
-  </div>
-
-
-  <div class="p-6">
-    <div v-for="(ejercicios, dia) in progresosPorDia" :key="dia" class="mb-10 max-w-md mx-auto">
-      <h2 class="text-2xl font-bold mb-4 capitalize">{{ dia }}</h2>
-      <div v-for="(progresos, ejercicio) in ejercicios" :key="ejercicio" class="mb-8">
-        <h3 class="text-xl font-semibold mb-2 ">{{ ejercicio }}</h3>
-        <Line :data="getGraficaData(progresos)" :options="options" />
-      </div>
+  <div class="h-screen w-full bg-black" v-if="progresos.length === 0">
+    <a href="/" class="mt-10 ml-10 inline-block">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 12 12">
+        <path fill="#fff"
+          d="M10.5 6a.75.75 0 0 0-.75-.75H3.81l1.97-1.97a.75.75 0 0 0-1.06-1.06L1.47 5.47a.75.75 0 0 0 0 1.06l3.25 3.25a.75.75 0 0 0 1.06-1.06L3.81 6.75h5.94A.75.75 0 0 0 10.5 6" />
+      </svg>
+    </a>
+    <div class="justify-center items-center h-3/4 bg-black flex flex-col">
+      <p class="text-white text-xl">Lo siento, todavia no tienes progresos registrados, cuando los registres vuelve para
+        verificarlos</p>
     </div>
   </div>
-  <PieDePagina />
+  <div class="" v-else>
+    <div class="flex justify-center bg-black w-full h-20">
+      <Cabecera :enlaces="[
+        { titulo: 'CALENDARIO', href: 'calendario' },
+        { titulo: 'RUTINA', href: 'rutina' },
+        { titulo: 'INICIO', href: 'home' },
+        { titulo: 'GRUPO', href: 'grupo' }
+      ]" />
+    </div>
+    <div class="bg-black text-white flex flex-col items-center">
+      <div v-for="(ejercicios, dia) in progresos" :key="dia" class="mb-8">
+        <p class="text-2xl font-bold m-4 capitalize">{{ dia }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+          <div v-for="(progresosEjercicio, ejercicio) in ejercicios" :key="ejercicio"
+            class="mb-6 p-4 bg-gray-100 rounded shadow flex flex-col items-center">
+            <p class="font-semibold mb-2 text-black text-l">{{ ejercicio }}</p>
+            <div class="w-full md:w-[350px] h-[230px] bg-white rounded flex items-center justify-center">
+              <Line v-if="progresosEjercicio.length" :data="graficaData(progresosEjercicio)" :options="chartOptions" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <PieDePagina />
+  </div>
 </template>
