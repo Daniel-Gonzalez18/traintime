@@ -15,10 +15,8 @@ class CalendarController extends Controller
 {   
     
     public function createEventFromRoutine(){
-        if (!$user->calendar_access_token) {
-            return redirect('/auth/google');
-        }
-        $user=Auth::user();
+       
+    $user=Auth::user();
     $client = new Google_Client();
     $client->setClientId(config('services.google.client_id'));
     $client->setClientSecret(config('services.google.client_secret'));
@@ -26,7 +24,9 @@ class CalendarController extends Controller
     $client->setAccessType('offline');
     $client->setPrompt('consent');
     $client->addScope(Google_Service_Calendar::CALENDAR);
-
+        if (!$user->calendar_access_token) {
+            return redirect('/auth/google');
+        }
  
 
 
@@ -70,7 +70,7 @@ class CalendarController extends Controller
 
         }else{
             if (isset($ejercicio['duración'])) {
-                                $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Duracion: {$ejercicio['duracion']} , Descanso: {$ejercicio['descanso']}\n";
+                                $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Duracion: {$ejercicio['duración']} , Descanso: {$ejercicio['descanso']}\n";
 
             }else{
                                 $descripcion .= " {$ejercicio['nombre']} , Series: {$ejercicio['series']} , Descanso: {$ejercicio['descanso']}\n";

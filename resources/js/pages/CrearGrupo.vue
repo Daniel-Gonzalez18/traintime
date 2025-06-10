@@ -54,7 +54,7 @@ const errores = reactive({
 const enviado = ref(false);
 
 function validarEmail(email: string) {
-    return /^@gmail\.com$/i.test(email);
+    return /^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(email);
 }
 
 function validarFormulario(e: Event) {
