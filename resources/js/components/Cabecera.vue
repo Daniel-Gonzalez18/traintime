@@ -16,7 +16,6 @@ const enlacesDerecha = props.enlaces.slice(mitad);
 </script>
 
 <template>
-  <!-- <nav class="bg-[#D9D9D9]"> -->
   <nav class="enlaces">
     <a class="hover:text-[#FFFFFF]" v-for="(enlace, index) in enlacesIzquierda" :key="'izq-' + index"
       :href="route(enlace.href)">
@@ -27,39 +26,10 @@ const enlacesDerecha = props.enlaces.slice(mitad);
       :href="route(enlace.href)">
       {{ enlace.titulo }}
     </a>
-    <!-- </nav>
-
-    <div class="logo">
-      <AppLogoIcon />
-    </div>
-
-    <nav class="enlaces">
-      <a v-for="(enlace, index) in enlacesDerecha" :key="'der-' + index" :href="route(enlace.href)">
-        {{ enlace.titulo }}
-      </a> -->
   </nav>
 
 </template>
-
 <style scoped>
-/* template {
-  width: 80%;
-  margin: 0 auto;
-  background-color: #d9d9d9;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  position: relative;
-} */
-/* 
-.logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-} */
-
 .enlaces {
   display: flex;
   justify-content: space-around;
