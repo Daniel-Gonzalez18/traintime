@@ -40,16 +40,15 @@ Aplicación web para la gestión de rutinas de entrenamiento, registro de progre
 
 Los usuarios pueden crear una cuenta mediante un formulario de registro.
 
-**Captura sugerida:**  
-![Formulario de registro](./rimagenesReadme/register.png)
+ 
+![Formulario de registro](./imagenesReadme/register.png)
 
 ---
 
 ### Conexión con Google Calendar
 
 Desde el panel del usuario, es posible conectar la cuenta de Google. Esto permite que TrainTime cree eventos directamente en su calendario.
-
-**Captura sugerida:**  
+  
 ![Conexión con Google](./imagenesReadme/google_calendar.png)
 
 ---
@@ -58,7 +57,6 @@ Desde el panel del usuario, es posible conectar la cuenta de Google. Esto permit
 
 Los usuarios pueden poner todas sus especificaciones para que la IA cree su rutina ajustada a sus necesidades.
 
-**Captura sugerida:**  
 ![Editor de rutinas](./imagenesReadme/creacion_rutina.png)
 
 
@@ -67,9 +65,8 @@ Los usuarios pueden poner todas sus especificaciones para que la IA cree su ruti
 ### Visualización de progresos
 
 Los usuarios pueden ver todos los progresos de la rutina con Chart.js conforme vaya registrando los progresos
-
-**Captura sugerida:**  
-![Editor de rutinas](./imagenesReadme/progresos.png)
+  
+![Visualizar progresos](./imagenesReadme/progresos.png)
 
 
 ---
@@ -78,8 +75,7 @@ Los usuarios pueden ver todos los progresos de la rutina con Chart.js conforme v
 
 Los usuarios pueden ver el calendario de su rutina desde la página con FullCalendar.
 
-**Captura sugerida:**  
-![Editor de rutinas](./rimagenesReadme/calendario.png)
+![Visualizar calendario](./imagenesReadme/calendario.png)
 
 
 ---
